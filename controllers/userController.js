@@ -1,3 +1,4 @@
+const User = require('../models/user');
 const user = require('../models/user');
 
 exports.getAllusers = async (req, res) => {
@@ -11,7 +12,7 @@ exports.getAllusers = async (req, res) => {
 
 exports.getuser = async (req, res) => {
     try {
-        const user = await user.findById(req.params.id);
+        const user = await User.findById(req.params.id);
         if (!user) return res.status(404).json({ error: 'user not found' });
         res.status(200).json(user);
     } catch (error) {
@@ -41,9 +42,9 @@ exports.updateuser = async (req, res) => {
 
 exports.deleteuser = async (req, res) => {
     try {
-        const user = await user.findById(req.params.id);
+        const user = await User.findByIdAndDelete(req.params.id);
         if (!user) return res.status(404).json({ error: 'user not found' });
-        await user.remove();
+        
         res.status(200).json({ message: 'user deleted' });
     } catch (error) {
         res.status(500).json({ error: 'Server error' });

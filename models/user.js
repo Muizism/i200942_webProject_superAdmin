@@ -20,20 +20,7 @@ const UserSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    bookingHistory: [
-        {
-            hotel: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Hotel'
-            },
-            room: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'Room'
-            },
-            checkInDate: Date,
-            checkOutDate: Date
-        }
-    ],
+   
     loyaltyPoints: {
         type: Number,
         default: 0

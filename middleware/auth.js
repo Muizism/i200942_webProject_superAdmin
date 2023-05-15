@@ -1,10 +1,11 @@
 const jwt= require('jsonwebtoken');
-const user = require('../models/user');
+const User = require('../models/user');
 const { use } = require('../routes/superAdmin/dashboard');
 require('dotenv').config();
 //create jwt token authentication
 exports.userAuth= async(req,res,next)=>{
     try{
+       
         const token= req.header('Authorization').replace('Bearer ','');
         const decoded= jwt.verify(token,dotenv.JWT_SECRET);
         const user= await user.findOne({_id:decoded._id,'tokens.token':token});
@@ -50,10 +51,13 @@ exports.adminAuth= async(req,res,next)=>{
 
 //create superAdmin authentication
 exports.superAdminAuth= async(req,res,next)=>{
-    try{
-        const token= req.header('Authorization').replace('Bearer ','');
-        const decoded= jwt.verify(token,dotenv.JWT_SECRET);
-        const superAdmin= await user.findOne({_id:decoded._id,'tokens.token':token});
+     
+        console.log(req.header('Authorization'));
+        const token= req.header('Authorization') ;
+        const decoded= jwt.verify(token,process.env.JWT_SECRET);
+        console.log(decoded);
+        try{
+        const superAdmin= await User.findOne({_id:decoded.userId });
 
         if(superAdmin.userType!='superAdmin'){
             res.status(401).send({error:'You are not superAdmin'});

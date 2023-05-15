@@ -10,7 +10,7 @@ router.get('/hotels',auth.superAdminAuth, hotelController.getAllhotels);
 router.get('/hotels/:id',auth.superAdminAuth, hotelController.gethotel);
 
 // Route to create a new hotel
-router.post('/hotels',auth.superAdminAuth, hotelController.createhotel);
+router.post('/create',auth.superAdminAuth, hotelController.createhotel);
 
 // Route to update an existing hotel by ID
 router.put('/hotels/:id',auth.superAdminAuth, hotelController.updatehotel);

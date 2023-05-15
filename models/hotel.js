@@ -19,16 +19,7 @@ const HotelSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    reviews: [
-        {
-            user: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: 'User'
-            },
-            rating: Number,
-            comment: String
-        }
-    ]
+     
 });
 
 const Hotel = mongoose.model('Hotel', HotelSchema);

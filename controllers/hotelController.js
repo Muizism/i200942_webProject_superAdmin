@@ -1,4 +1,4 @@
-const hotel = require('../models/hotel');
+const Hotel = require('../models/hotel');
 
 exports.getAllhotels = async (req, res) => {
     try {
@@ -21,7 +21,14 @@ exports.gethotel = async (req, res) => {
 
 exports.createhotel = async (req, res) => {
     try {
-        const newhotel = new hotel(req.body);
+        console.log(req.body);
+        const{name,addresss,rooms,rating}=req.body;
+        const newhotel = new Hotel({ 
+            name,
+            address,
+            rooms,
+            rating
+        });
         const savedhotel = await newhotel.save();
         res.status(201).json(savedhotel);
     } catch (error) {
