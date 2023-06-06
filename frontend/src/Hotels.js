@@ -53,7 +53,7 @@ const Hotels = () => {
   };
 
   return (
-    <div className='hotels'>
+    <div className="hotels">
       <h2>Hotels</h2>
 
       {/* Create Hotel Form */}
@@ -75,9 +75,10 @@ const Hotels = () => {
 
       {/* Display Hotels */}
       {hotels.map((hotel) => (
-        <div key={hotel.id}>
+        <div key={hotel.id} className="hotel-item">
           <p>Name: {hotel.name}</p>
           <p>Location: {hotel.location}</p>
+
           {/* Update Hotel Form */}
           <form onSubmit={(e) => {
             e.preventDefault();

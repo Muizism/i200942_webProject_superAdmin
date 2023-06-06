@@ -11,11 +11,11 @@ const {
     deleteAdmin 
 } = require('../../controllers/adminController');
 
-router.get('/',auth.superAdminAuth, getAllAdmins);
-router.get('/:id',auth.superAdminAuth, getAdmin);
-router.post('/createAdmin',auth.superAdminAuth, createAdmin);
-router.put('/:id',auth.superAdminAuth, updateAdmin);
-router.delete('/:id',auth.superAdminAuth, deleteAdmin);
+router.get('/', getAllAdmins);
+router.get('/:id', getAdmin);
+router.post('/createAdmin', createAdmin);
+router.put('/:id', updateAdmin);
+router.delete('/:id', deleteAdmin);
 router.post('/signup' , adminController.signUp);
 router.post('/signin' , adminController.signIn);
 

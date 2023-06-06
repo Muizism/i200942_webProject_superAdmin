@@ -16,36 +16,35 @@ const Signup = () => {
   };
 
   return (
-    <div>
-      <h2>Signup</h2>
+    <div className='signup-container'>
+    <h2>Signup</h2>
 
-      {/* Signup Form */}
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        handleSignup();
-      }}>
-        <input
-          type="text"
-          placeholder="Name"
-          value={userData.name}
-          onChange={(e) => setUserData({ ...userData, name: e.target.value })}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={userData.email}
-          onChange={(e) => setUserData({ ...userData, email: e.target.value })}
-        />
-        <input
-          type="password"
-          placeholder="Password"
-          value={userData.password}
-          onChange={(e) => setUserData({ ...userData, password: e.target.value })}
-        />
-        <button type="submit">Sign Up</button>
-        <p>Already have an account? <Link to="/">Login</Link></p>
-      </form>
-    </div>
+    <form onSubmit={(e) => {
+      e.preventDefault();
+      handleSignup();
+    }}>
+      <input
+        type="text"
+        placeholder="Name"
+        value={userData.name}
+        onChange={(e) => setUserData({ ...userData, name: e.target.value })}
+      />
+      <input
+        type="email"
+        placeholder="Email"
+        value={userData.email}
+        onChange={(e) => setUserData({ ...userData, email: e.target.value })}
+      />
+      <input
+        type="password"
+        placeholder="Password"
+        value={userData.password}
+        onChange={(e) => setUserData({ ...userData, password: e.target.value })}
+      />
+      <button type="submit">Sign Up</button>
+      <p className='login-text'>Already have an account? <Link to="/">Login</Link></p>
+    </form>
+  </div>
   );
 };
 

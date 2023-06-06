@@ -5,6 +5,6 @@ const auth = require('../../middleware/auth');
 // Assuming you have some function to get reports
 const { getReports } = require('../../controllers/reportsController');
 
-router.get('/',auth.superAdminAuth, getReports);
+router.get('/', getReports);
 
 module.exports = router;
