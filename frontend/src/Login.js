@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { signIn } from './api/backendAPI';
+import './App.css';
+import { Link } from "react-router-dom"; 
 
 const Login = () => {
   const [userData, setUserData] = useState({ email: '', password: '' });
@@ -15,7 +17,7 @@ const Login = () => {
   };
 
   return (
-    <div>
+    <div className='login'>
       <h2>Login</h2>
 
       {/* Login Form */}
@@ -37,6 +39,9 @@ const Login = () => {
         />
         <button type="submit">Login</button>
       </form>
+
+      {/* Signup button */}
+      <p>Don't have an account? <Link to="/signup">Signup</Link></p>
     </div>
   );
 };
