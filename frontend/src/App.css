@@ -233,3 +233,153 @@ button {
 .login-text {
   text-align: center;
 }
+.users-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+h2 {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+form {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+form input[type="text"],
+form input[type="email"] {
+  flex: 1;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+form button[type="submit"],
+.search-container button {
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.search-container {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.users-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.users-table th,
+.users-table td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+.users-table th {
+  background-color: #f2f2f2;
+}
+
+.users-table td:last-child {
+  text-align: center;
+}
+
+.users-table td button {
+  margin-right: 5px;
+  padding: 5px 10px;
+  background-color: #4CAF50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.searched-user {
+  margin-top: 20px;
+  padding: 10px;
+  background-color: #f2f2f2;
+}
+
+.searched-user h3 {
+  margin-top: 0;
+}
+
+.admins-container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.admins-container h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.admins-container form {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.admins-container input[type="text"],
+.admins-container input[type="email"] {
+  width: 200px;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.admins-container button {
+  padding: 5px 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.admin-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-bottom: 20px;
+}
+
+.admin-table th,
+.admin-table td {
+  padding: 8px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.admin-table th {
+  background-color: #f2f2f2;
+  font-weight: bold;
+}
+
+.admin-table tr:nth-child(even) {
+  background-color: #f9f9f9;
+}
+
+.admin-table tr:hover {
+  background-color: #f5f5f5;
+}
+
+.search-container {
+  margin-bottom: 10px;
+}
+
+.search-container input[type="text"] {
+  width: 150px;
+  margin-right: 10px;
+  padding: 5px;
+}
+
+.searched-admin {
+  margin-top: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  background-color: #f2f2f2;
+}

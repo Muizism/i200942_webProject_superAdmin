@@ -10,23 +10,23 @@ export const getDashboardStats = () => {
 
 // Admins routes
 export const getAllAdmins = () => {
-  return backendAPI.get('/admins');
+  return backendAPI.get('/manageAdmins');
 };
 
 export const getAdmin = (id) => {
-  return backendAPI.get(`/admins/${id}`);
+  return backendAPI.get(`/manageAdmins/${id}`);
 };
 
 export const createAdmin = (adminData) => {
-  return backendAPI.post('/admins/createAdmin', adminData);
+  return backendAPI.post('/manageAdmins/createAdmin', adminData);
 };
 
 export const updateAdmin = (id, adminData) => {
-  return backendAPI.put(`/admins/${id}`, adminData);
+  return backendAPI.put(`/manageAdmins/${id}`, adminData);
 };
 
 export const deleteAdmin = (id) => {
-  return backendAPI.delete(`/admins/${id}`);
+  return backendAPI.delete(`/manageAdmins/${id}`);
 };
 
 // Authentication routes
@@ -62,26 +62,26 @@ export const deleteHotel = (id) => {
 
 // Users routes
 export const getAllUsers = () => {
-  return backendAPI.get('/users');
+  return backendAPI.get('/manageUsers');
 };
 
 export const getUser = (id) => {
-  return backendAPI.get(`/users/${id}`);
+  return backendAPI.get(`/manageusers/${id}`);
 };
 
 export const createUser = (userData) => {
-  return backendAPI.post('/users', userData);
+  return backendAPI.post('/manageusers', userData);
 };
 
 export const updateUser = (id, userData) => {
-  return backendAPI.put(`/users/${id}`, userData);
+  return backendAPI.put(`/manageusers/${id}`, userData);
 };
 
 export const deleteUser = (id) => {
-  return backendAPI.delete(`/users/${id}`);
+  return backendAPI.delete(`/manageusers/${id}`);
 };
 
 // Report analytics route
 export const getReports = () => {
-  return backendAPI.get('/reports');
+  return backendAPI.get('/reportsAnalytics');
 };
