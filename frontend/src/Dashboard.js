@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getDashboardStats } from './api/backendAPI';
+import './App.css';
 
 const Dashboard = () => {
   const [stats, setStats] = useState(null);
@@ -9,7 +10,12 @@ const Dashboard = () => {
     // Fetch dashboard stats from the backend API
     getDashboardStats()
       .then((response) => {
-        setStats(response.data);
+        const { adminCount, userCount, hotelCount } = response.data;
+        setStats({
+          totalAdmins: adminCount,
+          totalUsers: userCount,
+          totalHotels: hotelCount
+        });
         setLoading(false);
       })
       .catch((error) => {
@@ -19,7 +25,7 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div>
+    <div className='dashboard'>
       <h2>Dashboard</h2>
 
       {loading ? (

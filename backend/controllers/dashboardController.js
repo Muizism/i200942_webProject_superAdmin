@@ -7,6 +7,7 @@ exports.getDashboardStats = async (req, res) => {
         const adminCount = await Admin.countDocuments();
         const userCount = await User.countDocuments();
         const hotelCount = await Hotel.countDocuments();
+        
 
         res.status(200).json({
             adminCount,

@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { signUp } from './api/backendAPI';
+import { Link } from "react-router-dom"; 
 
 const Signup = () => {
   const [userData, setUserData] = useState({ name: '', email: '', password: '' });
@@ -42,6 +43,7 @@ const Signup = () => {
           onChange={(e) => setUserData({ ...userData, password: e.target.value })}
         />
         <button type="submit">Sign Up</button>
+        <p>Already have an account? <Link to="/">Login</Link></p>
       </form>
     </div>
   );

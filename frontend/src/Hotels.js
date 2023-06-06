@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAllHotels, createHotel, updateHotel, deleteHotel } from './api/backendAPI';
+import './App.css';
 
 const Hotels = () => {
   const [hotels, setHotels] = useState([]);
@@ -52,7 +53,7 @@ const Hotels = () => {
   };
 
   return (
-    <div>
+    <div className='hotels'>
       <h2>Hotels</h2>
 
       {/* Create Hotel Form */}

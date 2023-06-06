@@ -20,13 +20,13 @@ exports.signUp = async (req, res) => {
   
       const user = await newUser.save();
   
-      const token = jwt.sign(
-        { userId: user._id, userType: user.userType },
-        'your-secret-key',
-        { expiresIn: '1h' }
-      );
+      // const token = jwt.sign(
+      //   { userId: user._id, userType: user.userType },
+      //   'your-secret-key',
+      //   { expiresIn: '1h' }
+      // );
   
-      res.status(201).json({ token, userId: user._id });
+      // res.status(201).json({ token, userId: user._id });
   
     } catch (error) {
       res.status(500).json({ message: error.message });

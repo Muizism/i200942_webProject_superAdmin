@@ -2,14 +2,16 @@ import React, { useState } from 'react';
 import { signIn } from './api/backendAPI';
 import './App.css';
 import { Link } from "react-router-dom"; 
+import { useNavigate } from 'react-router-dom';
 
 const Login = () => {
   const [userData, setUserData] = useState({ email: '', password: '' });
-
+  const navigate = useNavigate();
   const handleLogin = () => {
     signIn(userData)
       .then((response) => {
         console.log(response.data); // Handle success
+        navigate('/dashboard');
       })
       .catch((error) => {
         console.error(error); // Handle error

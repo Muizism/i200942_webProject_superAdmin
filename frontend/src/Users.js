@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { getAllUsers, createUser, updateUser, deleteUser } from './api/backendAPI';
-
+import './App.css';
 const Users = () => {
   const [users, setUsers] = useState([]);
   const [newUser, setNewUser] = useState({ name: '', email: '' });
@@ -52,7 +52,7 @@ const Users = () => {
   };
 
   return (
-    <div>
+    <div className='users'>
       <h2>Users</h2>
 
       {/* Create User Form */}

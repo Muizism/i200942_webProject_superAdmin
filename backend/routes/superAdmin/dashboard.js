@@ -5,6 +5,6 @@ const auth = require('../../middleware/auth');
 // Assuming you have some function to get dashboard stats
 const { getDashboardStats } = require('../../controllers/dashboardController');
 
-router.get('/',auth.superAdminAuth, getDashboardStats);
+router.get('/', getDashboardStats);
 
 module.exports = router;

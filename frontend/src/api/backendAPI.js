@@ -31,11 +31,12 @@ export const deleteAdmin = (id) => {
 
 // Authentication routes
 export const signUp = (userData) => {
-  return backendAPI.post('/admins/signup', userData);
+  return backendAPI.post('/manageAdmins/signup', userData);
 };
 
+
 export const signIn = (userData) => {
-  return backendAPI.post('/admins/signin', userData);
+  return backendAPI.post('/manageAdmins/signin', userData);
 };
 
 // Hotels routes
