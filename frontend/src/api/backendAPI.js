@@ -55,11 +55,13 @@ export const createHotel = (hotelData) => {
 };
 
 export const updateHotel = (id, hotelData) => {
-  return backendAPI.put(`/manageHotels/${id}`, hotelData);
+  console.log(id);
+  return backendAPI.put(`/manageHotels/hotels/${id}`, hotelData);
 };
 
 export const deleteHotel = (id) => {
-  return backendAPI.delete(`/manageHotels/${id}`);
+  console.log(id);
+  return backendAPI.delete(`/manageHotels/delete/${id}`);
 };
 
 // Users routes

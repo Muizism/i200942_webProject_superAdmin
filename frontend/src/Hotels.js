@@ -10,7 +10,7 @@ const Hotels = () => {
 
   useEffect(() => {
     // Fetch hotels from the backend API
-    console.log('Fetching hotels from the backend API');
+   // console.log('Fetching hotels from the backend API');
     getAllHotels()
       .then((response) => {
         setHotels(response.data);
@@ -18,7 +18,7 @@ const Hotels = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [hotels]);
 
   const handleCreateHotel = () => {
     createHotel(newHotel)
@@ -32,6 +32,7 @@ const Hotels = () => {
   };
 
   const handleUpdateHotel = (id, updatedHotel) => {
+    console.log('Updating hotel with id: ' + id);
     updateHotel(id, updatedHotel)
       .then(() => {
         const updatedHotels = hotels.map((hotel) =>
@@ -47,6 +48,7 @@ const Hotels = () => {
   };
 
   const handleDeleteHotel = (id) => {
+    console.log('Deleting hotel with id: ' + id); // Use the "id" parameter instead of "hotels._id"
     deleteHotel(id)
       .then(() => {
         const filteredHotels = hotels.filter((hotel) => hotel.id !== id);
@@ -56,10 +58,10 @@ const Hotels = () => {
         console.error(error);
       });
   };
-
+  
   const handleEditHotel = (hotel) => {
     setNewHotel({ name: hotel.name, location: hotel.location });
-    setEditingHotelId(hotel.id);
+    setEditingHotelId(hotel._id);
     setIsEditing(true);
   };
 
@@ -68,7 +70,16 @@ const Hotels = () => {
       <h2>Hotels</h2>
 
       {/* Create/Update Hotel Form */}
-      <form onSubmit={isEditing ? () => handleUpdateHotel(editingHotelId, newHotel) : handleCreateHotel}>
+      <form
+        onSubmit={
+          isEditing
+            ? (e) => {
+                e.preventDefault(); // Prevent the form submission
+                handleUpdateHotel(editingHotelId, newHotel);
+              }
+            : handleCreateHotel
+        }
+      >
         <input
           type="text"
           placeholder="Name"
@@ -104,7 +115,7 @@ const Hotels = () => {
                 ) : (
                   <>
                     <button onClick={() => handleEditHotel(hotel)}>Edit</button>
-                    <button onClick={() => handleDeleteHotel(hotel.id)}>Delete</button>
+                    <button onClick={() => handleDeleteHotel(hotel._id)}>Delete</button>
                   </>
                 )}
               </td>

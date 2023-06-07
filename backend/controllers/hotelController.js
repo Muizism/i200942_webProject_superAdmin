@@ -37,7 +37,7 @@ exports.createhotel = async (req, res) => {
 
 exports.updatehotel = async (req, res) => {
     try {
-        console.log("I am good");
+        console.log(req.params.id);
         const updatedhotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updatedhotel) return res.status(404).json({ error: 'hotel not found' });
         res.status(200).json(updatedhotel);
@@ -47,10 +47,12 @@ exports.updatehotel = async (req, res) => {
 };
 
 exports.deletehotel = async (req, res) => {
+    console.log(req.params.id);
     try {
-        const hotel = await Hotel.findById(req.params.id);
+        console.log(req.params.id);
+        const hotel = await Hotel.findByIdAndDelete(req.params.id);
         if (!hotel) return res.status(404).json({ error: 'hotel not found' });
-        await hotel.remove();
+        //await hotel.remove();
         res.status(200).json({ message: 'hotel deleted' });
     } catch (error) {
         res.status(500).json({ error: 'Server error' });

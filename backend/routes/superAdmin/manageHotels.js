@@ -7,7 +7,7 @@ const auth = require('../../middleware/auth');
 router.get('/hotels', hotelController.getAllhotels);
 
 // Route to get a specific hotel by ID
-router.get('/hotels/:id', hotelController.gethotel);
+//router.get('/hotels/:id', hotelController.gethotel);
 
 // Route to create a new hotel
 router.post('/create', hotelController.createhotel);
@@ -16,6 +16,6 @@ router.post('/create', hotelController.createhotel);
 router.put('/hotels/:id', hotelController.updatehotel);
 
 // Route to delete a hotel by ID
-router.delete('/hotels/:id', hotelController.deletehotel);
+router.delete('/delete/:id', hotelController.deletehotel);
 
 module.exports = router;

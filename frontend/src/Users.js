@@ -74,18 +74,18 @@ const Users = () => {
       });
   };
 
-  const handleSearchUser = () => {
-    if (searchUserId) {
-      getUser(searchUserId)
-        .then((response) => {
-          setSearchedUser(response.data);
-        })
-        .catch((error) => {
-          console.error(error);
-          setSearchedUser(null);
-        });
-    }
-  };
+  // const handleSearchUser = () => {
+  //   if (searchUserId) {
+  //     getUser(searchUserId)
+  //       .then((response) => {
+  //         setSearchedUser(response.data);
+  //       })
+  //       .catch((error) => {
+  //         console.error(error);
+  //         setSearchedUser(null);
+  //       });
+  //   }
+  // };
 
   const handleEditUser = (user) => {
     console.log(user._id);
