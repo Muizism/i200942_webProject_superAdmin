@@ -1,4 +1,7 @@
 import React, { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { toast, ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import {
   getAllUsers,
   createUser,
@@ -15,7 +18,6 @@ const Users = () => {
   const [searchedUser, setSearchedUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editingUserId, setEditingUserId] = useState('');
-  const [popupMessage, setPopupMessage] = useState('');
 
   useEffect(() => {
     fetchUsers();
@@ -33,26 +35,23 @@ const Users = () => {
 
   const handleCreateUser = (event) => {
     event.preventDefault();
-
+  
     if (editMode) {
       handleUpdateUser(editingUserId, newUser);
       setEditMode(false);
       setEditingUserId('');
-      setPopupMessage('User updated successfully!');
+      showToast('User updated successfully!');
     } else {
       createUser(newUser)
-        .then((response) => response.json())
-        .then((data) => {
-          setUsers([...users, data]);
+        .then((response) => {
+          setUsers([...users, response.data]);
           setNewUser({ name: '', email: '' });
-          setPopupMessage('User created successfully!');
-          fetchUsers(); // Fetch updated users
+          showToast('User created successfully!');
         })
         .catch((error) => {
           console.error(error);
         });
     }
-    showPopupMessage();
   };
 
   const handleUpdateUser = (id, updatedUser) => {
@@ -63,13 +62,11 @@ const Users = () => {
         );
         setUsers(updatedUsers);
         setNewUser({ name: '', email: '' });
-        setPopupMessage('User updated successfully!');
-        fetchUsers(); // Fetch updated users
+      //  showToast('User updated successfully!');
       })
       .catch((error) => {
         console.error(error);
       });
-    showPopupMessage();
   };
 
   const handleDeleteUser = (id) => {
@@ -77,80 +74,122 @@ const Users = () => {
       .then(() => {
         const filteredUsers = users.filter((user) => user.id !== id);
         setUsers(filteredUsers);
-        setPopupMessage('User deleted successfully!');
-        fetchUsers(); // Fetch updated users
+        showToast('User deleted successfully!');
       })
       .catch((error) => {
         console.error(error);
       });
-    showPopupMessage();
   };
 
-  const showPopupMessage = () => {
-    setPopupMessage('');
-    setTimeout(() => {
-      setPopupMessage('');
-    }, 9000);
+  const showToast = (message) => {
+    toast.success(message, { autoClose: 2000 });
   };
 
   const handleEditUser = (user) => {
     setEditMode(true);
-    setEditingUserId(user._id);
+    setEditingUserId(user._id); // Set the editingUserId before entering edit mode
     setNewUser({ name: user.name, email: user.email });
   };
-
   return (
-    <div className="users-container">
-      <h2>Users</h2>
-
+    <div className="container-fluid bg-dark text-light min-vh-100">
+      <header className="py-4 bg-black">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-black justify-content-between">
+          <div className="d-flex align-items-center">
+            <i className="bi bi-person-fill fs-4 me-2 text-white"></i>
+            <h1 className="navbar-brand fs-3 ms-2">Manage Users</h1>
+          </div>
+          <div className="d-flex">
+            <Link to="/dashboard" className="nav-link btn btn-light mx-3">
+              <i className="bi bi-people-fill me-2"></i>Dashboard
+            </Link>
+            <Link to="/admins" className="nav-link btn btn-light mx-3">
+              <i className="bi bi-person-badge-fill me-2"></i>Admins
+            </Link>
+            <Link to="/hotels" className="nav-link btn btn-light mx-3">
+              <i className="bi bi-building-fill me-2"></i>Hotels
+            </Link>
+            <Link to="/" className="nav-link btn btn-light mx-3">
+              Logout
+            </Link>
+          </div>
+        </nav>
+      </header>
+      <br />
       {/* Create/Edit User Form */}
-      <form onSubmit={handleCreateUser}>
-        <input
-          type="text"
-          placeholder="Name"
-          value={newUser.name}
-          onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
-        />
-        <input
-          type="email"
-          placeholder="Email"
-          value={newUser.email}
-          onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
-        />
-        <button type="submit">{editMode ? 'Update' : 'Create User'}</button>
-        {editMode && (
-          <button
-            type="button"
-            onClick={() => {
-              setEditMode(false);
-              setEditingUserId('');
-              setNewUser({ name: '', email: '' });
-            }}
-          >
-            Cancel
-          </button>
-        )}
+      <form onSubmit={handleCreateUser} className="mb-4">
+        <div className="row">
+          <div className="col-md-4">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Name"
+              value={newUser.name}
+              onChange={(e) =>
+                setNewUser({ ...newUser, name: e.target.value })
+              }
+            />
+          </div>
+          <div className="col-md-4">
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Email"
+              value={newUser.email}
+              onChange={(e) =>
+                setNewUser({ ...newUser, email: e.target.value })
+              }
+            />
+          </div>
+          <div className="col-md-4">
+            <button type="submit" className="btn btn-primary">
+              {editMode ? 'Update' : 'Create User'}
+            </button>
+            {editMode && (
+              <button
+                type="button"
+                className="btn btn-secondary ms-2"
+                onClick={() => {
+                  setEditMode(false);
+                  setEditingUserId('');
+                  setNewUser({ name: '', email: '' });
+                }}
+              >
+                Cancel
+              </button>
+            )}
+          </div>
+        </div>
       </form>
 
       {/* Display Users */}
-      <table className="users-table">
+      <table className="table table-striped table-dark">
         <thead>
           <tr>
-            <th>Number</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Actions</th>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Actions</th>
           </tr>
         </thead>
         <tbody>
           {users.map((user, index) => (
             <tr key={user.id}>
-              <td>{index + 1}</td>
+              <th scope="row">{index + 1}</th>
               <td>{user.name}</td>
               <td>{user.email}</td>
               <td>
-                <button onClick={() => handleEditUser(user)}>Edit</button>
-                <button onClick={() => handleDeleteUser(user._id)}>Delete</button>
+                <button
+                  className="btn btn-sm btn-primary me-2"
+                  onClick={() => handleEditUser(user)}
+                >
+                  Edit
+                </button>
+                <button
+                  className="btn btn-sm btn-danger"
+                  onClick={() => handleDeleteUser(user._id)}
+                >
+                  Delete
+                </button>
               </td>
             </tr>
           ))}
@@ -159,15 +198,19 @@ const Users = () => {
 
       {/* Searched User */}
       {searchedUser && (
-        <div className="searched-user">
-          <h3>Searched User:</h3>
-          <p>Name: {searchedUser.name}</p>
-          <p>Email: {searchedUser.email}</p>
+        <div className="card mt-4">
+          <div className="card-header">
+            <h3 className="card-title">Searched User:</h3>
+          </div>
+          <div className="card-body">
+            <p>Name: {searchedUser.name}</p>
+            <p>Email: {searchedUser.email}</p>
+          </div>
         </div>
       )}
 
       {/* Popup Message */}
-      {popupMessage && <div className="popup-message">{popupMessage}</div>}
+      <ToastContainer position={toast.POSITION.TOP_RIGHT} />
     </div>
   );
 };
