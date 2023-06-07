@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     },
     userType: {
         type: String,
-        required: false,
+        required: true,
         enum: ['user', 'admin', 'superAdmin'],
         default: 'user'
     },
@@ -22,6 +22,7 @@ const UserSchema = new mongoose.Schema({
     },
    
     loyaltyPoints: {
+        required: true,
         type: Number,
         default: 0
     }

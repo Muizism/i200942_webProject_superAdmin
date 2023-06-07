@@ -63,7 +63,7 @@ exports.signUp = async (req, res) => {
   };
 
 exports.getAllAdmins = async (req, res) => {
-    console.log("get all admins");
+   // console.log("get all admins");
     try {
         const admins = await Admin.find();
         res.status(200).json(admins);
@@ -105,9 +105,12 @@ exports.updateAdmin = async (req, res) => {
 exports.deleteAdmin = async (req, res) => {
     try {
         console.log("delete admin");
-        const admin = await User.findById ( req.params.id );
+        console.log(req.params.id);
+        const admin = await Admin.findByIdAndDelete ( req.params.id );
+        console.log(admin);
         if (!admin) return res.status(404).json({ error: 'Admin not found' });
-        await admin.remove();
+       // await admin.remove();
+      // window.alert("Admin deleted");
         res.status(200).json({ message: 'Admin deleted' });
     } catch (error) {
         res.status(500).json({ error: 'Server error' });

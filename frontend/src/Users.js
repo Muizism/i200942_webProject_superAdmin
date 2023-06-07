@@ -66,7 +66,7 @@ const Users = () => {
     console.log(id);
     deleteUser(id)
       .then(() => {
-        const filteredUsers = users.filter((user) => user._id !== id);
+        const filteredUsers = users.filter((user) => user.id !== id);
         setUsers(filteredUsers);
       })
       .catch((error) => {
@@ -128,7 +128,7 @@ const Users = () => {
       </form>
 
       {/* Search User Form */}
-      <div className="search-container">
+      {/* <div className="search-container">
         <input
           type="text"
           placeholder="Search by User ID"
@@ -138,7 +138,7 @@ const Users = () => {
         <button type="button" onClick={handleSearchUser}>
           Search
         </button>
-      </div>
+      </div> */}
 
       {/* Display Users */}
       <table className="users-table">

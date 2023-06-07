@@ -43,12 +43,12 @@ export const signIn = (userData) => {
 
 // Hotels routes
 export const getAllHotels = () => {
-  return backendAPI.get('/manageHotels');
+  return backendAPI.get('/manageHotels/hotels');
 };
 
-export const getHotel = (id) => {
-  return backendAPI.get(`/manageHotels/${id}`);
-};
+// export const getHotel = (id) => {
+//   return backendAPI.get(`/manageHotels/${id}`);
+// };
 
 export const createHotel = (hotelData) => {
   return backendAPI.post('/manageHotels/create', hotelData);

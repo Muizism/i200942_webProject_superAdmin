@@ -10,6 +10,7 @@ const Hotels = () => {
 
   useEffect(() => {
     // Fetch hotels from the backend API
+    console.log('Fetching hotels from the backend API');
     getAllHotels()
       .then((response) => {
         setHotels(response.data);

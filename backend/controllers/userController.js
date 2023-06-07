@@ -1,4 +1,5 @@
 //const User = require('../models/user');
+//import User from '../models/user';
 const user = require('../models/user');
 
 exports.getAllusers = async (req, res) => {
@@ -12,9 +13,9 @@ exports.getAllusers = async (req, res) => {
 
 exports.getuser = async (req, res) => {
     try {
-        const user = await user.findById(req.params.id);
-        if (!user) return res.status(404).json({ error: 'user not found' });
-        res.status(200).json(user);
+        const u = await user.findById(req.params.id);
+        if (!u) return res.status(404).json({ error: 'user not found' });
+        res.status(200).json(u);
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
     }
@@ -27,8 +28,9 @@ exports.createuser = async (req, res) => {
         const u={name:name, email:email};
         const newuser = new user(u);
         console.log(newuser);
-        const saveduser = await user.save();
-        res.status(201).json(saveduser);
+         await newuser.save();
+         console.log("Moiz is ter .save()");
+        res.status(201).json(newuser);
     } catch (error) {
         res.status(500).json("This is a 500 error");
     }
@@ -47,8 +49,9 @@ exports.updateuser = async (req, res) => {
 exports.deleteuser = async (req, res) => {
     console.log(req.params.id);
     try {
-        const user = await user.findByIdAndDelete(req.params.id);
-        if (!user) return res.status(404).json("it is a 404 error");
+        const u = await user.findByIdAndDelete(req.params.id);
+        console.log(u);
+        if (!u) return res.status(404).json("it is a 404 error");
         
         res.status(200).json({ message: 'user deleted' });
     } catch (error) {

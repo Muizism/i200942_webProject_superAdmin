@@ -2,7 +2,7 @@ const Hotel = require('../models/hotel');
 
 exports.getAllhotels = async (req, res) => {
     try {
-        const hotels = await hotel.find();
+        const hotels = await Hotel.find();
         res.status(200).json(hotels);
     } catch (error) {
         res.status(500).json({ error: 'Server error' });
@@ -10,8 +10,9 @@ exports.getAllhotels = async (req, res) => {
 };
 
 exports.gethotel = async (req, res) => {
+    console.log("I am in gethotel");
     try {
-        const hotel = await hotel.findById(req.params.id);
+        const hotel = await Hotel.findById(req.params.id);
         if (!hotel) return res.status(404).json({ error: 'hotel not found' });
         res.status(200).json(hotel);
     } catch (error) {
@@ -22,12 +23,10 @@ exports.gethotel = async (req, res) => {
 exports.createhotel = async (req, res) => {
     try {
         console.log(req.body);
-        const{name,addresss,rooms,rating}=req.body;
+        const{name, location}=req.body;
         const newhotel = new Hotel({ 
             name,
-            address,
-            rooms,
-            rating
+            location
         });
         const savedhotel = await newhotel.save();
         res.status(201).json(savedhotel);
@@ -38,7 +37,8 @@ exports.createhotel = async (req, res) => {
 
 exports.updatehotel = async (req, res) => {
     try {
-        const updatedhotel = await hotel.findByIdAndUpdate(req.params.id, req.body, { new: true });
+        console.log("I am good");
+        const updatedhotel = await Hotel.findByIdAndUpdate(req.params.id, req.body, { new: true });
         if (!updatedhotel) return res.status(404).json({ error: 'hotel not found' });
         res.status(200).json(updatedhotel);
     } catch (error) {
@@ -48,7 +48,7 @@ exports.updatehotel = async (req, res) => {
 
 exports.deletehotel = async (req, res) => {
     try {
-        const hotel = await hotel.findById(req.params.id);
+        const hotel = await Hotel.findById(req.params.id);
         if (!hotel) return res.status(404).json({ error: 'hotel not found' });
         await hotel.remove();
         res.status(200).json({ message: 'hotel deleted' });
