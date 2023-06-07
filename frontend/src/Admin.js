@@ -89,28 +89,51 @@ const Admins = () => {
       <header className="py-4 bg-black">
         <nav className="navbar navbar-expand-lg navbar-dark bg-black justify-content-between">
           <div className="d-flex align-items-center">
-          <img
-                src="/admin.png"
-                alt="Admin Icon"
-                className="icon"
-                style={{ width: '80px', height: '80px' }}
-              />
+            <img
+              src="/admin.png"
+              alt="Admin Icon"
+              className="icon"
+              style={{ width: '80px', height: '80px' }}
+            />
             <i className="bi bi-person-fill fs-4 me-2 text-white"></i>
             <h1 className="navbar-brand fs-3 ms-2">Manage Admins</h1>
           </div>
           <div className="d-flex">
-            <Link to="/dashboard" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-people-fill me-2"></i>Dashboard
-            </Link>
-            <Link to="/users" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-person-badge-fill me-2"></i>Users
-            </Link>
-            <Link to="/hotels" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-building-fill me-2"></i>Hotels
-            </Link>
-            <Link to="/" className="nav-link btn btn-light mx-3">
-              Logout
-            </Link>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+          </div>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-auto">
+              <li className="nav-item">
+                <Link to="/dashboard" className="nav-link">
+                  <i className="bi bi-people-fill me-2"></i>Dashboard
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/users" className="nav-link">
+                  <i className="bi bi-person-badge-fill me-2"></i>Users
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/hotels" className="nav-link">
+                  <i className="bi bi-building-fill me-2"></i>Hotels
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/" className="nav-link">
+                  Logout
+                </Link>
+              </li>
+            </ul>
           </div>
         </nav>
       </header>
@@ -118,76 +141,86 @@ const Admins = () => {
 
       {/* Create/Edit Admin Form */}
       <form onSubmit={handleCreateAdmin}>
-      <div  className="col-md-4">
-        <input
-          type="text"
-          className="form-control"
-          placeholder="Name"
-          value={newAdmin.name}
-          onChange={(e) => setNewAdmin({ ...newAdmin, name: e.target.value })}
-        />
-         </div>
-        <div  className="col-md-4">
-        <input
-          type="email"
-          className="form-control"
-          placeholder="Email"
-          value={newAdmin.email}
-          onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
-        />
+        <div className="row">
+          <div className="col-md-4">
+            <input
+              type="text"
+              className="form-control"
+              placeholder="Name"
+              value={newAdmin.name}
+              onChange={(e) =>
+                setNewAdmin({ ...newAdmin, name: e.target.value })
+              }
+            />
+          </div>
+          <div className="col-md-4">
+            <input
+              type="email"
+              className="form-control"
+              placeholder="Email"
+              value={newAdmin.email}
+              onChange={(e) =>
+                setNewAdmin({ ...newAdmin, email: e.target.value })
+              }
+            />
+          </div>
+          <div className="col-md-4">
+            <button type="submit" className="btn btn-primary">
+              {editMode ? 'Update' : 'Create Admin'}
+            </button>
+            {editMode && (
+              <button
+                type="button"
+                className="btn btn-secondary ms-2"
+                onClick={() => {
+                  setEditMode(false);
+                  setEditingAdminId('');
+                  setNewAdmin({ name: '', email: '' });
+                }}
+              >
+                Cancel
+              </button>
+            )}
+          </div>
         </div>
-        <button type="submit" className="btn btn-primary">
-          {editMode ? 'Update' : 'Create Admin'}
-        </button>
-        {editMode && (
-          <button
-            type="button"
-            className="btn btn-secondary"
-            onClick={() => {
-              setEditMode(false);
-              setEditingAdminId('');
-              setNewAdmin({ name: '', email: '' });
-            }}
-          >
-            Cancel
-          </button>
-        )}
       </form>
 
       {/* Display Admins */}
-      <table  className="table table-striped table-dark">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Email</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {admins.map((admin, index) => (
-            <tr key={admin._id}>
-              <td>{index + 1}</td>
-              <td>{admin.name}</td>
-              <td>{admin.email}</td>
-              <td>
-                <button
-                  className="btn btn-primary mr-2"
-                  onClick={() => handleEditAdmin(admin)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-danger"
-                  onClick={() => handleDeleteAdmin(admin._id)}
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="table-responsive">
+        <table className="table table-striped table-dark mt-4">
+          <thead>
+            <tr>
+              <th>#</th>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {admins.map((admin, index) => (
+              <tr key={admin._id}>
+                <td>{index + 1}</td>
+                <td>{admin.name}</td>
+                <td>{admin.email}</td>
+                <td>
+                  <button
+                    className="btn btn-primary mr-2"
+                    onClick={() => handleEditAdmin(admin)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-danger"
+                    onClick={() => handleDeleteAdmin(admin._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       <ToastContainer position={toast.POSITION.TOP_RIGHT} />
     </div>

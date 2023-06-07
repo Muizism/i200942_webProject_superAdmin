@@ -30,28 +30,49 @@ const Dashboard = () => {
       <header className="py-4 bg-black">
         <nav className="navbar navbar-expand-lg navbar-dark bg-black justify-content-between">
           <div className="d-flex align-items-center">
-              <img
-                src="/Dashboardd.png"
-                alt="Dashboard Icon"
-                className="icon"
-                style={{ width: '130px', height: '80px' }}
-              />
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <img
+              src="/Dashboardd.png"
+              alt="Dashboard Icon"
+              className="icon"
+              style={{ width: '130px', height: '80px' }}
+            />
             <i className="bi bi-person-fill fs-4 me-2 text-white"></i>
-            <h1 className="navbar-brand fs-3 ms-2">Super Admin Dashboard</h1>
+            <h1 className="navbar-brand fs-5 ms-2 fw-bold">Super Admin Dashboard</h1>
           </div>
-          <div className="d-flex">
-            <Link to="/users" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-people-fill me-2"></i>Users
-            </Link>
-            <Link to="/admins" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-person-badge-fill me-2"></i>Admins
-            </Link>
-            <Link to="/hotels" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-building-fill me-2"></i>Hotels
-            </Link>
-            <Link to="/" className="nav-link btn btn-light mx-3">
-              Logout
-            </Link>
+          <div className="collapse navbar-collapse" id="navbarNav">
+            <ul className="navbar-nav ms-auto">
+              <li className="nav-item">
+                <Link to="/users" className="nav-link">
+                  <i className="bi bi-people-fill me-2"></i>Users
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/admins" className="nav-link">
+                  <i className="bi bi-person-badge-fill me-2"></i>Admins
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/hotels" className="nav-link">
+                  <i className="bi bi-building-fill me-2"></i>Hotels
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link to="/" className="nav-link">
+                  Logout
+                </Link>
+              </li>
+            </ul>
           </div>
         </nav>
       </header>

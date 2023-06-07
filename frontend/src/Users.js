@@ -35,7 +35,7 @@ const Users = () => {
 
   const handleCreateUser = (event) => {
     event.preventDefault();
-  
+
     if (editMode) {
       handleUpdateUser(editingUserId, newUser);
       setEditMode(false);
@@ -62,7 +62,7 @@ const Users = () => {
         );
         setUsers(updatedUsers);
         setNewUser({ name: '', email: '' });
-      //  showToast('User updated successfully!');
+        //  showToast('User updated successfully!');
       })
       .catch((error) => {
         console.error(error);
@@ -90,33 +90,60 @@ const Users = () => {
     setEditingUserId(user._id); // Set the editingUserId before entering edit mode
     setNewUser({ name: user.name, email: user.email });
   };
+
   return (
     <div className="container-fluid bg-dark text-light min-vh-100">
       <header className="py-4 bg-black">
         <nav className="navbar navbar-expand-lg navbar-dark bg-black justify-content-between">
           <div className="d-flex align-items-center">
-          <img
-                src="/user.png"
-                alt="User Icon"
-                className="icon"
-                style={{ width: '80px', height: '80px' }}
-              />
+            <img
+              src="/user.png"
+              alt="User Icon"
+              className="icon"
+              style={{ width: '80px', height: '80px' }}
+            />
             <i className="bi bi-person-fill fs-4 me-2 text-white"></i>
             <h1 className="navbar-brand fs-3 ms-2">Manage Users</h1>
           </div>
           <div className="d-flex">
-            <Link to="/dashboard" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-people-fill me-2"></i>Dashboard
-            </Link>
-            <Link to="/admins" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-person-badge-fill me-2"></i>Admins
-            </Link>
-            <Link to="/hotels" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-building-fill me-2"></i>Hotels
-            </Link>
-            <Link to="/" className="nav-link btn btn-light mx-3">
-              Logout
-            </Link>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarSupportedContent"
+              aria-controls="navbarSupportedContent"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div
+              className="collapse navbar-collapse"
+              id="navbarSupportedContent"
+            >
+              <ul className="navbar-nav">
+                <li className="nav-item">
+                  <Link to="/dashboard" className="nav-link">
+                    <i className="bi bi-people-fill me-2"></i>Dashboard
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/admins" className="nav-link">
+                    <i className="bi bi-person-badge-fill me-2"></i>Admins
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/hotels" className="nav-link">
+                    <i className="bi bi-building-fill me-2"></i>Hotels
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/" className="nav-link">
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </nav>
       </header>
@@ -168,39 +195,41 @@ const Users = () => {
       </form>
 
       {/* Display Users */}
-      <table className="table table-striped table-dark">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Name</th>
-            <th scope="col">Email</th>
-            <th scope="col">Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          {users.map((user, index) => (
-            <tr key={user.id}>
-              <th scope="row">{index + 1}</th>
-              <td>{user.name}</td>
-              <td>{user.email}</td>
-              <td>
-                <button
-                  className="btn btn-sm btn-primary me-2"
-                  onClick={() => handleEditUser(user)}
-                >
-                  Edit
-                </button>
-                <button
-                  className="btn btn-sm btn-danger"
-                  onClick={() => handleDeleteUser(user._id)}
-                >
-                  Delete
-                </button>
-              </td>
+      <div className="table-responsive">
+        <table className="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Name</th>
+              <th scope="col">Email</th>
+              <th scope="col">Actions</th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {users.map((user, index) => (
+              <tr key={user.id}>
+                <th scope="row">{index + 1}</th>
+                <td>{user.name}</td>
+                <td>{user.email}</td>
+                <td>
+                  <button
+                    className="btn btn-sm btn-primary me-2"
+                    onClick={() => handleEditUser(user)}
+                  >
+                    Edit
+                  </button>
+                  <button
+                    className="btn btn-sm btn-danger"
+                    onClick={() => handleDeleteUser(user._id)}
+                  >
+                    Delete
+                  </button>
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
 
       {/* Searched User */}
       {searchedUser && (

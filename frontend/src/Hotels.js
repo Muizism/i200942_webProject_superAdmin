@@ -84,118 +84,153 @@ const Hotels = () => {
   return (
     <div className="container-fluid bg-dark text-light min-vh-100">
       <header className="py-4 bg-black">
-        <nav className="navbar navbar-expand-lg navbar-dark bg-black justify-content-between">
-          <div className="d-flex align-items-center">
-          <img
+        <nav className="navbar navbar-expand-lg navbar-dark bg-black">
+          <div className="container">
+            <Link to="/" className="navbar-brand">
+              <img
                 src="/hotel.png"
                 alt="Hotel Icon"
                 className="icon"
                 style={{ width: '80px', height: '80px' }}
               />
-            <i className="bi bi-person-fill fs-4 me-2 text-white"></i>
-            <h1 className="navbar-brand fs-3 ms-2">Manage Hotels</h1>
-          </div>
-          <div className="d-flex">
-            <Link to="/dashboard" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-people-fill me-2"></i>Dashboard
+              <span className="ms-2 fs-3">Manage Hotels</span>
             </Link>
-            <Link to="/admins" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-person-badge-fill me-2"></i>Admins
-            </Link>
-            <Link to="/users" className="nav-link btn btn-light mx-3">
-              <i className="bi bi-building-fill me-2"></i>Users
-            </Link>
-            <Link to="/" className="nav-link btn btn-light mx-3">
-              Logout
-            </Link>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarNav"
+              aria-controls="navbarNav"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+            <div className="collapse navbar-collapse" id="navbarNav">
+              <ul className="navbar-nav ms-auto">
+                <li className="nav-item">
+                  <Link to="/dashboard" className="nav-link">
+                    <i className="bi bi-people-fill me-2"></i>Dashboard
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/admins" className="nav-link">
+                    <i className="bi bi-person-badge-fill me-2"></i>Admins
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/users" className="nav-link">
+                    <i className="bi bi-building-fill me-2"></i>Users
+                  </Link>
+                </li>
+                <li className="nav-item">
+                  <Link to="/" className="nav-link">
+                    Logout
+                  </Link>
+                </li>
+              </ul>
+            </div>
           </div>
         </nav>
       </header>
       <br />
-      <form
-        className="hotel-form"
-        onSubmit={
-          isEditing
-            ? (e) => {
-                e.preventDefault();
-                handleUpdateHotel(editingHotelId, newHotel);
-              }
-            : handleCreateHotel
-        }
-      >
-         <div className="col-md-4">
-        <input
-          className="form-control"
-          type="text"
-          placeholder="Name"
-          value={newHotel.name}
-          onChange={(e) => setNewHotel({ ...newHotel, name: e.target.value })}
-        />
-        </div>
-        <div className="col-md-4">
-        <input
-          className="form-control"
-          type="text"
-          placeholder="Location"
-          value={newHotel.location}
-          onChange={(e) => setNewHotel({ ...newHotel, location: e.target.value })}
-        />
+      <div className="container">
+        <form
+          className="hotel-form row"
+          onSubmit={
+            isEditing
+              ? (e) => {
+                  e.preventDefault();
+                  handleUpdateHotel(editingHotelId, newHotel);
+                }
+              : handleCreateHotel
+          }
+        >
+          <div className="col-md-4 mb-3">
+            <input
+              className="form-control"
+              type="text"
+              placeholder="Name"
+              value={newHotel.name}
+              onChange={(e) => setNewHotel({ ...newHotel, name: e.target.value })}
+            />
           </div>
-        {isEditing ? (
-          <>
-            <button className="btn btn-primary me-2" type="submit">
-              Update Hotel
-            </button>
-            <button className="btn btn-secondary" onClick={handleCancelEdit}>
-              Cancel
-            </button>
-          </>
-        ) : (
-          <button className="btn btn-primary" type="submit">
-            Create Hotel
-          </button>
-        )}
-      </form>
+          <div className="col-md-4 mb-3">
+            <input
+              className="form-control"
+              type="text"
+              placeholder="Location"
+              value={newHotel.location}
+              onChange={(e) => setNewHotel({ ...newHotel, location: e.target.value })}
+            />
+          </div>
+          <div className="col-md-4">
+            {isEditing ? (
+              <>
+                <button className="btn btn-primary me-2" type="submit">
+                  Update Hotel
+                </button>
+                <button className="btn btn-secondary" onClick={handleCancelEdit}>
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <button className="btn btn-primary" type="submit">
+                Create Hotel
+              </button>
+            )}
+          </div>
+        </form>
+      </div>
 
-      <table className="table table-striped table-dark">
-        <thead>
-          <tr>
-            <th>#</th>
-            <th>Name</th>
-            <th>Location</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-       
-<tbody>
-  {hotels.map((hotel,index) => (
-    <tr key={hotel._id}>
-      <th scope="row">{index + 1}</th>
-      <td>{hotel.name}</td>
-      <td>{hotel.location}</td>
-      <td>
-        {isEditing && editingHotelId === hotel._id ? (
-          <button
-            className="btn btn-primary"
-            onClick={() => handleUpdateHotel(hotel._id, newHotel)}
-          >
-            Update
-          </button>
-        ) : (
-          <>
-            <button className="btn btn-secondary" onClick={() => handleEditHotel(hotel)}>
-              Edit
-            </button>
-            <button className="btn btn-danger" onClick={() => handleDeleteHotel(hotel._id)}>
-              Delete
-            </button>
-          </>
-        )}
-      </td>
-    </tr>
-  ))}
-</tbody>
-      </table>
+      <div className="container mt-4">
+        <div className="table-responsive">
+          <table className="table table-striped table-dark">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Name</th>
+                <th>Location</th>
+                <th>Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {hotels.map((hotel, index) => (
+                <tr key={hotel._id}>
+                  <th scope="row">{index + 1}</th>
+                  <td>{hotel.name}</td>
+                  <td>{hotel.location}</td>
+                  <td>
+                    {isEditing && editingHotelId === hotel._id ? (
+                      <button
+                        className="btn btn-primary"
+                        onClick={() => handleUpdateHotel(hotel._id, newHotel)}
+                      >
+                        Update
+                      </button>
+                    ) : (
+                      <>
+                        <button
+                          className="btn btn-secondary"
+                          onClick={() => handleEditHotel(hotel)}
+                        >
+                          Edit
+                        </button>
+                        <button
+                          className="btn btn-danger"
+                          onClick={() => handleDeleteHotel(hotel._id)}
+                        >
+                          Delete
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </div>
 
       <ToastContainer />
     </div>
