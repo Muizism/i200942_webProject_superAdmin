@@ -19,7 +19,9 @@ export const getAdmin = (id) => {
 
 export const createAdmin = (adminData) => {
   return backendAPI.post('/manageAdmins/createAdmin', adminData);
+  
 };
+
 
 export const updateAdmin = (id, adminData) => {
   return backendAPI.put(`/manageAdmins/${id}`, adminData);
@@ -41,23 +43,23 @@ export const signIn = (userData) => {
 
 // Hotels routes
 export const getAllHotels = () => {
-  return backendAPI.get('/hotels');
+  return backendAPI.get('/manageHotels');
 };
 
 export const getHotel = (id) => {
-  return backendAPI.get(`/hotels/${id}`);
+  return backendAPI.get(`/manageHotels/${id}`);
 };
 
 export const createHotel = (hotelData) => {
-  return backendAPI.post('/hotels/create', hotelData);
+  return backendAPI.post('/manageHotels/create', hotelData);
 };
 
 export const updateHotel = (id, hotelData) => {
-  return backendAPI.put(`/hotels/${id}`, hotelData);
+  return backendAPI.put(`/manageHotels/${id}`, hotelData);
 };
 
 export const deleteHotel = (id) => {
-  return backendAPI.delete(`/hotels/${id}`);
+  return backendAPI.delete(`/manageHotels/${id}`);
 };
 
 // Users routes

@@ -144,13 +144,56 @@ button {
   padding: 20px;
 }
 
-.dashboard {
-  text-align: center;
+.dashboard-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  font-family: Arial, sans-serif;
+}
+
+.dashboard-main {
+  width: 80%;
+  max-width: 800px;
+  background-color: #ffffff;
   padding: 20px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.dashboard-content {
+  margin-bottom: 20px;
 }
 
 .dashboard-nav {
+  display: flex;
+  justify-content: space-between;
   margin-bottom: 20px;
+}
+
+.dashboard-nav a {
+  text-decoration: none;
+  color: #333333;
+  padding: 8px;
+  border-radius: 4px;
+  background-color: #eeeeee;
+  transition: background-color 0.3s ease;
+}
+
+.dashboard-nav a:hover {
+  background-color: #dddddd;
+}
+
+.dashboard-loading {
+  text-align: center;
+  color: #999999;
+}
+
+.dashboard-footer {
+  text-align: center;
+  color: #999999;
+  margin-top: 20px;
 }
 
 .loading {
@@ -383,3 +426,74 @@ form button[type="submit"],
   border: 1px solid #ddd;
   background-color: #f2f2f2;
 }
+/* App.css */
+.hotels {
+  margin-top: 20px;
+}
+
+.hotels h2 {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.hotels form {
+  display: flex;
+  margin-bottom: 10px;
+}
+
+.hotels form input {
+  padding: 8px;
+  margin-right: 10px;
+}
+
+.hotels form button {
+  padding: 8px 16px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+}
+
+.hotels-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.hotels-table th,
+.hotels-table td {
+  padding: 8px;
+  border-bottom: 1px solid #ddd;
+  text-align: left;
+}
+
+.hotels-table th {
+  background-color: #f2f2f2;
+}
+
+.hotels-table td:last-child {
+  text-align: center;
+}
+
+.hotels-table button {
+  padding: 6px 10px;
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  cursor: pointer;
+  margin-right: 5px;
+}
+
+.hotels-table button:last-child {
+  margin-right: 0;
+}
+
+.hotels-table button:hover {
+  background-color: #45a049;
+}
+
+.hotels-table input[type='text'] {
+  width: 100%;
+  padding: 6px;
+  box-sizing: border-box;
+}
+

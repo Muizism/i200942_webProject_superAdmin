@@ -1,18 +1,18 @@
 import React, { useEffect, useState } from 'react';
-import { getAllAdmins, createAdmin, updateAdmin, deleteAdmin, getAdminById } from './api/backendAPI';
+import { getAllAdmins, createAdmin, updateAdmin, deleteAdmin } from './api/backendAPI';
 import './App.css';
 
 const Admins = () => {
   const [admins, setAdmins] = useState([]);
   const [newAdmin, setNewAdmin] = useState({ name: '', email: '' });
-  const [searchId, setSearchId] = useState('');
-  const [searchedAdmin, setSearchedAdmin] = useState(null);
+  const [editingAdminId, setEditingAdminId] = useState(null);
 
   useEffect(() => {
     // Fetch admins from the backend API
     getAllAdmins()
       .then((response) => {
         setAdmins(response.data);
+        
       })
       .catch((error) => {
         console.error(error);
@@ -20,7 +20,8 @@ const Admins = () => {
   }, []);
 
   const handleCreateAdmin = () => {
-    createAdmin(newAdmin)
+   
+    console.log(newAdmin)
       .then((response) => {
         setAdmins([...admins, response.data]);
         setNewAdmin({ name: '', email: '' });
@@ -30,17 +31,26 @@ const Admins = () => {
       });
   };
 
-  const handleUpdateAdmin = (id, updatedAdmin) => {
-    updateAdmin(id, updatedAdmin)
-      .then(() => {
-        const updatedAdmins = admins.map((admin) =>
-          admin.id === id ? { ...admin, ...updatedAdmin } : admin
-        );
-        setAdmins(updatedAdmins);
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  const handleEditAdmin = (admin) => {
+    setEditingAdminId(admin.id);
+    setNewAdmin({ name: admin.name, email: admin.email });
+  };
+
+  const handleUpdateAdmin = () => {
+    if (editingAdminId) {
+      updateAdmin(editingAdminId, newAdmin)
+        .then(() => {
+          const updatedAdmins = admins.map((admin) =>
+            admin.id === editingAdminId ? { ...admin, ...newAdmin } : admin
+          );
+          setAdmins(updatedAdmins);
+          setEditingAdminId(null);
+          setNewAdmin({ name: '', email: '' });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   const handleDeleteAdmin = (id) => {
@@ -54,13 +64,12 @@ const Admins = () => {
       });
   };
 
-
   return (
     <div className="admins-container">
       <h2>Admins</h2>
 
-      {/* Create Admin Form */}
-      <form onSubmit={handleCreateAdmin}>
+      {/* Create/Edit Admin Form */}
+      <div className="form-container">
         <input
           type="text"
           placeholder="Name"
@@ -73,10 +82,12 @@ const Admins = () => {
           value={newAdmin.email}
           onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
         />
-        <button type="submit">Create Admin</button>
-      </form>
-
-   
+        {editingAdminId ? (
+          <button className="edit-button" onClick={handleUpdateAdmin}>Update Admin</button>
+        ) : (
+          <button className="create-button" onClick={handleCreateAdmin}>Create Admin</button>
+        )}
+      </div>
 
       {/* Display Admins */}
       <table className="admin-table">
@@ -96,43 +107,15 @@ const Admins = () => {
               <td>{admin.name}</td>
               <td>{admin.email}</td>
               <td>
-                {/* Update Admin Form */}
-                <form onSubmit={(e) => {
-                  e.preventDefault();
-                  handleUpdateAdmin(admin.id, newAdmin);
-                }}>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={newAdmin.name}
-                    onChange={(e) => setNewAdmin({ ...newAdmin, name: e.target.value })}
-                  />
-                  <input
-                    type="email"
-                    placeholder="Email"
-                    value={newAdmin.email}
-                    onChange={(e) => setNewAdmin({ ...newAdmin, email: e.target.value })}
-                  />
-                  <button type="submit">Update</button>
-                </form>
+                <button className="edit-button" onClick={() => handleEditAdmin(admin)}>Edit</button>
               </td>
               <td>
-                <button onClick={() => handleDeleteAdmin(admin.id)}>Delete</button>
+                <button className="delete-button" onClick={() => handleDeleteAdmin(admin.id)}>Delete</button>
               </td>
             </tr>
           ))}
         </tbody>
       </table>
-
-      {/* Display Searched Admin */}
-      {searchedAdmin && (
-        <div className="searched-admin">
-          <h3>Searched Admin</h3>
-          <p>ID: {searchedAdmin.id}</p>
-          <p>Name: {searchedAdmin.name}</p>
-          <p>Email: {searchedAdmin.email}</p>
-        </div>
-      )}
     </div>
   );
 };

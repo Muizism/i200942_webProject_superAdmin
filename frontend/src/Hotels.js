@@ -5,6 +5,8 @@ import './App.css';
 const Hotels = () => {
   const [hotels, setHotels] = useState([]);
   const [newHotel, setNewHotel] = useState({ name: '', location: '' });
+  const [isEditing, setIsEditing] = useState(false);
+  const [editingHotelId, setEditingHotelId] = useState(null);
 
   useEffect(() => {
     // Fetch hotels from the backend API
@@ -35,6 +37,8 @@ const Hotels = () => {
           hotel.id === id ? { ...hotel, ...updatedHotel } : hotel
         );
         setHotels(updatedHotels);
+        setEditingHotelId(null);
+        setIsEditing(false);
       })
       .catch((error) => {
         console.error(error);
@@ -52,12 +56,18 @@ const Hotels = () => {
       });
   };
 
+  const handleEditHotel = (hotel) => {
+    setNewHotel({ name: hotel.name, location: hotel.location });
+    setEditingHotelId(hotel.id);
+    setIsEditing(true);
+  };
+
   return (
     <div className="hotels">
       <h2>Hotels</h2>
 
-      {/* Create Hotel Form */}
-      <form onSubmit={handleCreateHotel}>
+      {/* Create/Update Hotel Form */}
+      <form onSubmit={isEditing ? () => handleUpdateHotel(editingHotelId, newHotel) : handleCreateHotel}>
         <input
           type="text"
           placeholder="Name"
@@ -70,38 +80,37 @@ const Hotels = () => {
           value={newHotel.location}
           onChange={(e) => setNewHotel({ ...newHotel, location: e.target.value })}
         />
-        <button type="submit">Create Hotel</button>
+        <button type="submit">{isEditing ? 'Update Hotel' : 'Create Hotel'}</button>
       </form>
 
       {/* Display Hotels */}
-      {hotels.map((hotel) => (
-        <div key={hotel.id} className="hotel-item">
-          <p>Name: {hotel.name}</p>
-          <p>Location: {hotel.location}</p>
-
-          {/* Update Hotel Form */}
-          <form onSubmit={(e) => {
-            e.preventDefault();
-            handleUpdateHotel(hotel.id, newHotel);
-          }}>
-            <input
-              type="text"
-              placeholder="Name"
-              value={newHotel.name}
-              onChange={(e) => setNewHotel({ ...newHotel, name: e.target.value })}
-            />
-            <input
-              type="text"
-              placeholder="Location"
-              value={newHotel.location}
-              onChange={(e) => setNewHotel({ ...newHotel, location: e.target.value })}
-            />
-            <button type="submit">Update Hotel</button>
-          </form>
-
-          <button onClick={() => handleDeleteHotel(hotel.id)}>Delete Hotel</button>
-        </div>
-      ))}
+      <table className="hotels-table">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Location</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          {hotels.map((hotel) => (
+            <tr key={hotel.id}>
+              <td>{hotel.name}</td>
+              <td>{hotel.location}</td>
+              <td>
+                {isEditing && editingHotelId === hotel.id ? (
+                  <button onClick={() => handleUpdateHotel(hotel.id, newHotel)}>Update</button>
+                ) : (
+                  <>
+                    <button onClick={() => handleEditHotel(hotel)}>Edit</button>
+                    <button onClick={() => handleDeleteHotel(hotel.id)}>Delete</button>
+                  </>
+                )}
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 };
