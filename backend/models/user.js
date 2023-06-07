@@ -7,7 +7,7 @@ const UserSchema = new mongoose.Schema({
     },
     userType: {
         type: String,
-        required: true,
+        required: false,
         enum: ['user', 'admin', 'superAdmin'],
         default: 'user'
     },
@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true,
+        required: false,
     },
    
     loyaltyPoints: {

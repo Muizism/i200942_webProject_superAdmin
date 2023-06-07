@@ -27,21 +27,25 @@ const Users = () => {
       });
   }, [users]);
 
-  const handleCreateUser = () => {
+  const handleCreateUser = (event) => {
+    event.preventDefault();
+
     if (editMode) {
       handleUpdateUser(editingUserId, newUser);
       setEditMode(false);
       setEditingUserId('');
-    } else {
-      createUser(newUser)
-        .then((response) => {
-          setUsers([...users, response.data]);
-          setNewUser({ name: '', email: '' });
-        })
-        .catch((error) => {
-          console.error(error);
-        });
-    }
+      window.alert('User updated successfully!');
+    }else {
+        createUser(newUser)
+        .then((response) => response.json())
+          .then((data) => {
+            setUsers([...users, data]);
+            setNewUser({ name: '', email: '' });
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+      }
   };
 
   const handleUpdateUser = (id, updatedUser) => {
@@ -59,16 +63,10 @@ const Users = () => {
   };
 
   const handleDeleteUser = (id) => {
-  //  console.log(id);
-    // console.log("Moiz");
-    // const response=deleteUser(id);
-    // if(response.status===200)
-    // {
-    //   console.log("Deleted");
-    // }
+    console.log(id);
     deleteUser(id)
       .then(() => {
-        const filteredUsers = users.filter((user) => user.id !== id);
+        const filteredUsers = users.filter((user) => user._id !== id);
         setUsers(filteredUsers);
       })
       .catch((error) => {
@@ -90,8 +88,9 @@ const Users = () => {
   };
 
   const handleEditUser = (user) => {
+    console.log(user._id);
     setEditMode(true);
-    setEditingUserId(user.id);
+    setEditingUserId(user._id);
     setNewUser({ name: user.name, email: user.email });
   };
 
@@ -157,9 +156,10 @@ const Users = () => {
               <td>{index + 1}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              
+              {/* <td>{user.id}</td>
+              <td>{user._id}</td> */}
               <td>
-                <button onClick={() => handleEditUser(user._id)}>Edit</button>
+                <button onClick={() => handleEditUser(user)}>Edit</button>
                 <button onClick={() => handleDeleteUser(user._id)}>Delete</button>
               </td>
             </tr>
