@@ -95,6 +95,12 @@ const Users = () => {
       <header className="py-4 bg-black">
         <nav className="navbar navbar-expand-lg navbar-dark bg-black justify-content-between">
           <div className="d-flex align-items-center">
+          <img
+                src="/user.png"
+                alt="User Icon"
+                className="icon"
+                style={{ width: '80px', height: '80px' }}
+              />
             <i className="bi bi-person-fill fs-4 me-2 text-white"></i>
             <h1 className="navbar-brand fs-3 ms-2">Manage Users</h1>
           </div>

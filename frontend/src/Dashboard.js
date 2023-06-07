@@ -30,6 +30,12 @@ const Dashboard = () => {
       <header className="py-4 bg-black">
         <nav className="navbar navbar-expand-lg navbar-dark bg-black justify-content-between">
           <div className="d-flex align-items-center">
+              <img
+                src="/Dashboardd.png"
+                alt="Dashboard Icon"
+                className="icon"
+                style={{ width: '130px', height: '80px' }}
+              />
             <i className="bi bi-person-fill fs-4 me-2 text-white"></i>
             <h1 className="navbar-brand fs-3 ms-2">Super Admin Dashboard</h1>
           </div>

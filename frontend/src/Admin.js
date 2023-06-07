@@ -89,6 +89,12 @@ const Admins = () => {
       <header className="py-4 bg-black">
         <nav className="navbar navbar-expand-lg navbar-dark bg-black justify-content-between">
           <div className="d-flex align-items-center">
+          <img
+                src="/admin.png"
+                alt="Admin Icon"
+                className="icon"
+                style={{ width: '80px', height: '80px' }}
+              />
             <i className="bi bi-person-fill fs-4 me-2 text-white"></i>
             <h1 className="navbar-brand fs-3 ms-2">Manage Admins</h1>
           </div>
@@ -152,7 +158,7 @@ const Admins = () => {
       <table  className="table table-striped table-dark">
         <thead>
           <tr>
-            <th>Number</th>
+            <th>#</th>
             <th>Name</th>
             <th>Email</th>
             <th>Actions</th>
