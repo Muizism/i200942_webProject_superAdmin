@@ -17,8 +17,13 @@ exports.signUp = async (req, res) => {
         password: hashedPassword,
         userType,
       });
-  
-      const user = await newUser.save();
+      
+      const user = await newUser.save()
+      .then((response) => {
+        res.status(201).json({ message: 'Admin created successfully' });
+      }).catch((error) => {
+        res.status(500).json({ message: error.message });
+      });
   
       // const token = jwt.sign(
       //   { userId: user._id, userType: user.userType },

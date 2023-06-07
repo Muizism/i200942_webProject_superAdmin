@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const backendAPI = axios.create({
-  baseURL: 'http://localhost:3000', // Replace with your actual backend URL
+  baseURL: 'http://localhost:3000', 
 });
 
 export const getDashboardStats = () => {
@@ -33,7 +33,9 @@ export const deleteAdmin = (id) => {
 
 // Authentication routes
 export const signUp = (userData) => {
+  
   return backendAPI.post('/manageAdmins/signup', userData);
+  
 };
 
 

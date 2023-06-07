@@ -26,35 +26,54 @@ const Dashboard = () => {
   }, []);
 
   return (
-    <div className='dashboard-container'>
-      
+    <div className="container-fluid bg-dark text-light min-vh-100">
+      <header className="py-4 bg-black">
+        <nav className="navbar navbar-expand-lg navbar-dark bg-black justify-content-between">
+          <div className="d-flex align-items-center">
+            <i className="bi bi-person-fill fs-4 me-2 text-white"></i>
+            <h1 className="navbar-brand fs-3 ms-2">Super Admin Dashboard</h1>
+          </div>
+          <div className="d-flex">
+            <Link to="/users" className="nav-link btn btn-light mx-3">
+              <i className="bi bi-people-fill me-2"></i>Users
+            </Link>
+            <Link to="/admins" className="nav-link btn btn-light mx-3">
+              <i className="bi bi-person-badge-fill me-2"></i>Admins
+            </Link>
+            <Link to="/hotels" className="nav-link btn btn-light mx-3">
+              <i className="bi bi-building-fill me-2"></i>Hotels
+            </Link>
+            <Link to="/" className="nav-link btn btn-light mx-3">
+              Logout
+            </Link>
+          </div>
+        </nav>
+      </header>
 
-      <main className='dashboard-main'>
-        <div className='dashboard-content'>
-          <h2>Dashboard</h2>
-          <nav className='dashboard-nav'>
-            <Link to='/users'>Users</Link>
-            <Link to='/admins'>Admins</Link>
-            <Link to='/hotels'>Hotels</Link>
-            <Link to='/report-analytics'>Report Analytics</Link>
-          </nav>
-          {loading ? (
-            <p className='dashboard-loading'>Loading dashboard stats...</p>
-          ) : (
-            stats && (
-              <div>
-                <p>Total Admins: {stats.totalAdmins}</p>
-                <p>Total Hotels: {stats.totalHotels}</p>
-                <p>Total Users: {stats.totalUsers}</p>
-                {/* Display additional dashboard stats as needed */}
-              </div>
-            )
-          )}
+      <main className="py-5">
+        <div className="container">
+          <div className="row justify-content-center">
+            <div className="col-lg-8">
+              {loading ? (
+                <p className="mt-4">Loading dashboard stats...</p>
+              ) : (
+                stats && (
+                  <div>
+                    <h3 className="mt-4 text-center">Dashboard Stats</h3>
+                    <p className="text-center">Total Admins: {stats.totalAdmins}</p>
+                    <p className="text-center">Total Hotels: {stats.totalHotels}</p>
+                    <p className="text-center">Total Users: {stats.totalUsers}</p>
+                    {/* Display additional dashboard stats as needed */}
+                  </div>
+                )
+              )}
+            </div>
+          </div>
         </div>
       </main>
 
-      <footer className='dashboard-footer'>
-        <p>&copy; 2023 My App. All rights reserved.</p>
+      <footer className="mt-auto py-3 text-center">
+        <p>&copy; 2023 Muezism. All rights reserved.</p>
       </footer>
     </div>
   );

@@ -15,9 +15,13 @@ const Users = () => {
   const [searchedUser, setSearchedUser] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [editingUserId, setEditingUserId] = useState('');
+  const [popupMessage, setPopupMessage] = useState('');
 
   useEffect(() => {
-    // Fetch users from the backend API
+    fetchUsers();
+  }, [users]);
+
+  const fetchUsers = () => {
     getAllUsers()
       .then((response) => {
         setUsers(response.data);
@@ -25,7 +29,7 @@ const Users = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, [users]);
+  };
 
   const handleCreateUser = (event) => {
     event.preventDefault();
@@ -34,18 +38,21 @@ const Users = () => {
       handleUpdateUser(editingUserId, newUser);
       setEditMode(false);
       setEditingUserId('');
-      window.alert('User updated successfully!');
-    }else {
-        createUser(newUser)
+      setPopupMessage('User updated successfully!');
+    } else {
+      createUser(newUser)
         .then((response) => response.json())
-          .then((data) => {
-            setUsers([...users, data]);
-            setNewUser({ name: '', email: '' });
-          })
-          .catch((error) => {
-            console.error(error);
-          });
-      }
+        .then((data) => {
+          setUsers([...users, data]);
+          setNewUser({ name: '', email: '' });
+          setPopupMessage('User created successfully!');
+          fetchUsers(); // Fetch updated users
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+    showPopupMessage();
   };
 
   const handleUpdateUser = (id, updatedUser) => {
@@ -56,39 +63,37 @@ const Users = () => {
         );
         setUsers(updatedUsers);
         setNewUser({ name: '', email: '' });
+        setPopupMessage('User updated successfully!');
+        fetchUsers(); // Fetch updated users
       })
       .catch((error) => {
         console.error(error);
       });
+    showPopupMessage();
   };
 
   const handleDeleteUser = (id) => {
-    console.log(id);
     deleteUser(id)
       .then(() => {
         const filteredUsers = users.filter((user) => user.id !== id);
         setUsers(filteredUsers);
+        setPopupMessage('User deleted successfully!');
+        fetchUsers(); // Fetch updated users
       })
       .catch((error) => {
         console.error(error);
       });
+    showPopupMessage();
   };
 
-  // const handleSearchUser = () => {
-  //   if (searchUserId) {
-  //     getUser(searchUserId)
-  //       .then((response) => {
-  //         setSearchedUser(response.data);
-  //       })
-  //       .catch((error) => {
-  //         console.error(error);
-  //         setSearchedUser(null);
-  //       });
-  //   }
-  // };
+  const showPopupMessage = () => {
+    setPopupMessage('');
+    setTimeout(() => {
+      setPopupMessage('');
+    }, 9000);
+  };
 
   const handleEditUser = (user) => {
-    console.log(user._id);
     setEditMode(true);
     setEditingUserId(user._id);
     setNewUser({ name: user.name, email: user.email });
@@ -127,19 +132,6 @@ const Users = () => {
         )}
       </form>
 
-      {/* Search User Form */}
-      {/* <div className="search-container">
-        <input
-          type="text"
-          placeholder="Search by User ID"
-          value={searchUserId}
-          onChange={(e) => setSearchUserId(e.target.value)}
-        />
-        <button type="button" onClick={handleSearchUser}>
-          Search
-        </button>
-      </div> */}
-
       {/* Display Users */}
       <table className="users-table">
         <thead>
@@ -156,8 +148,6 @@ const Users = () => {
               <td>{index + 1}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
-              {/* <td>{user.id}</td>
-              <td>{user._id}</td> */}
               <td>
                 <button onClick={() => handleEditUser(user)}>Edit</button>
                 <button onClick={() => handleDeleteUser(user._id)}>Delete</button>
@@ -175,6 +165,9 @@ const Users = () => {
           <p>Email: {searchedUser.email}</p>
         </div>
       )}
+
+      {/* Popup Message */}
+      {popupMessage && <div className="popup-message">{popupMessage}</div>}
     </div>
   );
 };
