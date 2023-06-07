@@ -1,8 +1,9 @@
 import axios from 'axios';
 
 const backendAPI = axios.create({
-  baseURL: 'https://webbackend-fcpp.onrender.com', 
+  baseURL: 'https://webbackend-fcpp.onrender.com',
 });
+
 
 export const getDashboardStats = () => {
   return backendAPI.get('/dashboard');
