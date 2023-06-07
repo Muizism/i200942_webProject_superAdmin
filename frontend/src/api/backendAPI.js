@@ -79,7 +79,8 @@ export const updateUser = (id, userData) => {
   return backendAPI.put(`/manageusers/${id}`, userData);
 };
 
-export const deleteUser = (id) => {
+export const deleteUser = (id) => { 
+  console.log(id);
   return backendAPI.delete(`/manageusers/${id}`);
 };
 

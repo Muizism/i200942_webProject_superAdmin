@@ -1,5 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { getAllUsers, createUser, updateUser, deleteUser, getUser } from './api/backendAPI';
+import {
+  getAllUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+  getUser,
+} from './api/backendAPI';
 import './App.css';
 
 const Users = () => {
@@ -7,6 +13,8 @@ const Users = () => {
   const [newUser, setNewUser] = useState({ name: '', email: '' });
   const [searchUserId, setSearchUserId] = useState('');
   const [searchedUser, setSearchedUser] = useState(null);
+  const [editMode, setEditMode] = useState(false);
+  const [editingUserId, setEditingUserId] = useState('');
 
   useEffect(() => {
     // Fetch users from the backend API
@@ -17,17 +25,23 @@ const Users = () => {
       .catch((error) => {
         console.error(error);
       });
-  }, []);
+  }, [users]);
 
   const handleCreateUser = () => {
-    createUser(newUser)
-      .then((response) => {
-        setUsers([...users, response.data]);
-        setNewUser({ name: '', email: '' });
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+    if (editMode) {
+      handleUpdateUser(editingUserId, newUser);
+      setEditMode(false);
+      setEditingUserId('');
+    } else {
+      createUser(newUser)
+        .then((response) => {
+          setUsers([...users, response.data]);
+          setNewUser({ name: '', email: '' });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    }
   };
 
   const handleUpdateUser = (id, updatedUser) => {
@@ -37,6 +51,7 @@ const Users = () => {
           user.id === id ? { ...user, ...updatedUser } : user
         );
         setUsers(updatedUsers);
+        setNewUser({ name: '', email: '' });
       })
       .catch((error) => {
         console.error(error);
@@ -44,6 +59,13 @@ const Users = () => {
   };
 
   const handleDeleteUser = (id) => {
+  //  console.log(id);
+    // console.log("Moiz");
+    // const response=deleteUser(id);
+    // if(response.status===200)
+    // {
+    //   console.log("Deleted");
+    // }
     deleteUser(id)
       .then(() => {
         const filteredUsers = users.filter((user) => user.id !== id);
@@ -67,11 +89,17 @@ const Users = () => {
     }
   };
 
+  const handleEditUser = (user) => {
+    setEditMode(true);
+    setEditingUserId(user.id);
+    setNewUser({ name: user.name, email: user.email });
+  };
+
   return (
-    <div className='users-container'>
+    <div className="users-container">
       <h2>Users</h2>
 
-      {/* Create User Form */}
+      {/* Create/Edit User Form */}
       <form onSubmit={handleCreateUser}>
         <input
           type="text"
@@ -85,7 +113,19 @@ const Users = () => {
           value={newUser.email}
           onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
         />
-        <button type="submit">Create User</button>
+        <button type="submit">{editMode ? 'Update' : 'Create User'}</button>
+        {editMode && (
+          <button
+            type="button"
+            onClick={() => {
+              setEditMode(false);
+              setEditingUserId('');
+              setNewUser({ name: '', email: '' });
+            }}
+          >
+            Cancel
+          </button>
+        )}
       </form>
 
       {/* Search User Form */}
@@ -96,7 +136,9 @@ const Users = () => {
           value={searchUserId}
           onChange={(e) => setSearchUserId(e.target.value)}
         />
-        <button type="button" onClick={handleSearchUser}>Search</button>
+        <button type="button" onClick={handleSearchUser}>
+          Search
+        </button>
       </div>
 
       {/* Display Users */}
@@ -115,9 +157,10 @@ const Users = () => {
               <td>{index + 1}</td>
               <td>{user.name}</td>
               <td>{user.email}</td>
+              
               <td>
-                <button onClick={() => handleUpdateUser(user.id, newUser)}>Edit</button>
-                <button onClick={() => handleDeleteUser(user.id)}>Delete</button>
+                <button onClick={() => handleEditUser(user._id)}>Edit</button>
+                <button onClick={() => handleDeleteUser(user._id)}>Delete</button>
               </td>
             </tr>
           ))}
